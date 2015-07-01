@@ -1,0 +1,191 @@
+\ProvidesPackage{beamerthemeea-ufrgs}[2015/05/02 for beamer 3.01]
+
+% A beamer theme for presentations at EA-UFRGS
+% 
+% Author: Fabrizio Marmitt <fabrizio.marmitt@ufrgs.br>
+% Forked from: Rodrigo Machado <rma@inf.ufrgs.br>
+% Version: 0.1
+
+\mode<presentation>
+
+%\RequirePackage{beamerprosper}
+
+%%% Tests for other engines
+\RequirePackage{ifpdf}
+\RequirePackage{ifxetex}
+\RequirePackage{ifluatex}
+
+%%% EXPAND SOME TEX FEATURES (e.g. number of buffers)
+\RequirePackage{etex}
+
+%%% REQUIRED TO DRAW THE INF-UFRGS LOGO
+\RequirePackage{tikz}
+
+%%%% FONT COLOR
+\setbeamercolor{normal text}{fg=blue!15!black!80}
+
+%%% BETTER INTERLINE SPACE
+\usepackage{setspace} \setstretch{1}
+
+%%% BETTER MARGIN SPACE
+\setbeamersize{text margin left=.6cm}
+\setbeamersize{text margin right=.6cm}
+
+%%% BETTER ITEMIZE SPACE
+%
+%% from :  http://blog.nguyenvq.com/2011/06/14/modify-spacings-in-listing-itemizeenumerate-environments-for-latex-beamer/
+%%% SPACING BETWEEN ITEMS FOR BEAMER
+%%% following lets me add length between items
+%%% http://tex.stackexchange.com/questions/16793/global-setting-of-spacing-between-items-in-itemize-environment-for-beamer
+%% \let\oldframe\frame
+%% \renewcommand{\frame}{
+%% \oldframe
+%% \let\olditemize\itemize
+%% %%\renewcommand\itemize{\olditemize\addtolength{\itemsep}{0.5\baselineskip}}
+%% \renewcommand\itemize{\olditemize\addtolength{\parskip}{0.5\baselineskip}} %% this affects nested list (itemize) as well
+%% }
+\newlength{\wideitemsep}
+\setlength{\wideitemsep}{\itemsep}
+\addtolength{\wideitemsep}{.04\baselineskip}
+\let\olditem\item
+\renewcommand{\item}{\setlength{\itemsep}{\wideitemsep}\olditem}
+%%%\usepackage{enumitem} %% traditional way to modify listing (itemize and enumerate) properties...but beamer has its own definition
+%%% NESTED LISTS
+%%% http://tex.stackexchange.com/questions/20654/length-between-nested-lists
+\setbeamertemplate{itemize/enumerate subbody begin}{\vspace{0.25\baselineskip}}
+%\setbeamertemplate{itemize/enumerate subbody end}{\vspace{0.05\baselineskip}}
+%%% MORE OPTIONS http://tex.stackexchange.com/questions/11168/change-bullet-style-formatting-in-beamer
+\setlength{\leftmargini}  {0.5cm}
+\setlength{\leftmarginii} {0.5cm}
+\setlength{\leftmarginiii}{0.5cm}
+
+
+%%% FONT OPTIONS FOR SLIDE STRUCTURE
+\setbeamerfont{title}{series=\bfseries}
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamerfont{block title}{family=\rmfamily}
+\setbeamerfont{block title}{series=\bfseries}
+\setbeamerfont{block title}{size=\normalsize}
+
+
+%%% AUTOMATIC TABLE OF CONTENTS
+\newcommand{\contentstitle}{Contents}
+\AtBeginSection[] 
+{
+  \begin{frame}<beamer>
+    \frametitle{\contentstitle}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+%%% XELATEX and PDFLATEX differences in LOGO POSITIONING 
+
+\ifxetex  % running with XeTeX
+  \newcommand{\putlogo} %%% MODIFY LOGO POSITIONING 
+  {\pgfputat {\pgfxy(10.18-0.001\beamer@tempdim, 2.38-0.002\beamer@tempdim)}  {\pgfbox[right,top]{\INFLOGO{-0.01+0.0018\beamer@tempdim}}}}
+  
+\else    % running with PDFTeX or LuaTeX
+  \usepackage[protrusion=true,expansion=true]{microtype} % better presentation
+  \newcommand{\putlogo} %%% LOGO POSITIONING FOR PDFLATEX
+  {\pgfputat {\pgfxy(-0.15-0.005\beamer@tempdim, -0.05+0.028\beamer@tempdim)} {\pgfbox[right,top]{\INFLOGO{-0.01+0.0018\beamer@tempdim}}}}
+  
+\fi
+
+
+%%% DONT SHOW NAVIGATION BUTTONS 
+\setbeamertemplate{navigation symbols}{}
+
+
+%%% COLOR AND STYLE CUSTOMIZATION 
+\usecolortheme[RGB={170,0,0}]{structure}
+\usecolortheme{orchid}
+\setbeamercolor{normal text}{fg=black}
+\useinnertheme[shadow]{rounded}
+\setbeamertemplate{items}[default] 
+\setbeamertemplate{sections/subsections in toc}[default]
+
+\hypersetup{
+   colorlinks,
+   urlcolor=blue!70!black,
+   linkcolor=red!70!black,
+   backref=true
+}
+
+
+
+%%%%%% USER COMMANDS %%%%%%
+
+%%% INSERT PPGC LOGO
+\newcommand{\ppgc}{
+\begin{minipage}{3cm}%
+\begin{flushright}%
+\INFLOGO{0.08}%
+\end{flushright}%
+\end{minipage}%
+\begin{minipage}{6cm}%
+\begin{tabular}{l}%
+Programa de P\'{o}s Gradua\c{c}\~{a}o em Administra\c{c}\~{a}o \\%
+Escola de Administra\c{c}\~{a}o \\%
+Universidade Federal do Rio Grande do Sul \\%
+Porto Alegre, Brasil\\%
+\end{tabular}%
+\end{minipage}%
+}
+
+%%% INSERT INF LOGO
+\newcommand{\eatitle}{%
+\begin{minipage}{2cm}%
+\begin{flushright}%
+\INFLOGO{0.07}% 
+\end{flushright}%
+\end{minipage}%
+\begin{minipage}{5.5cm}%
+\begin{tabular}{l}%
+Escola de Administra\c{c}\~{a}o \\%
+Universidade Federal do Rio Grande do Sul \\%
+Porto Alegre, Brasil \\%
+\href{http://www.ufrgs.br/escoladeadministracao}{\color{black}http://www.ufrgs.br/escoladeadministracao}%
+\end{tabular}%
+\end{minipage}%
+}
+
+
+%%% TITLEPAGE
+\newcommand{\titlepageINF}
+{
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+}
+
+
+%%% TABLE OF CONTENTS
+\newcommand{\tableofcontentsINF}
+{
+\begin{frame}{\contentstitle}
+\tableofcontents
+\end{frame}
+}
+
+%%% DRAW INF-UFRGS LOGO (SCALED BY ARGUMENT)
+\newcommand{\INFLOGO}[1]
+{
+% Created by Eps2pgf 0.7.0 (build on 2008-08-24) on Sat Nov 13 16:20:21 BRST 2010
+\begin{tikzpicture}{ea.png}
+	 \node[anchor=south west,inner sep=0] at (0,0){\includegraphics[width=\textwidth]{ea.png}};
+\end{tikzpicture}
+}
+
+
+%%%%%% Package options
+\DeclareOption{no-logo}{
+\renewcommand*\putlogo{}
+}
+
+
+%%%% Execute package options
+\ProcessOptions%
+\relax
+
+
+\mode<all>
