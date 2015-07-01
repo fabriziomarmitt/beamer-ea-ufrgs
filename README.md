@@ -1,8 +1,8 @@
-beamer-ea-ufrgs
+Tema LaTex/Beamer da Escola de Adminsitração da UFRGS
 ================
 
-LaTeX/Beamer theme for the UFRGS School Of Management. 
+Projeto GNU para todos que desejam um tema do LaTeX/Beamer para apresentações com a identidade visual da Escola de Administração da UFRGS. 
 
-For an example of how to use the theme, see the source of the example presentation.
+O projeto está hospedado no GitHub e possui um exemplo para visualização. Toda colaboração é bem-vinda.
 
-forked from rodrigo-machado/beamer-inf-ufrgs
+Este projeto é um fork de https://github.com/rodrigo-machado/beamer-inf-ufrgs
